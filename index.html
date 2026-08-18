@@ -6,6 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         <title>Pantallas Quividi</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,800;1,800&display=swap"
+            rel="stylesheet" />
 
         <style>
             * {
@@ -16,9 +19,9 @@
                 margin: 0;
                 padding: 40px;
                 min-height: 100vh;
-                background: #10131a;
+                background: #012aff;
                 color: #ffffff;
-                font-family: Arial, sans-serif;
+                font-family: "Open Sans", sans-serif;
             }
 
             main {
@@ -28,16 +31,18 @@
 
             h1 {
                 margin: 0 0 10px;
+                font-size: 45px;
             }
 
             p {
                 margin: 0 0 32px;
-                color: #aeb7c6;
+                color: #ffffff;
+                font-size: 22px;
             }
 
             .screens {
                 display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
                 gap: 16px;
             }
 
@@ -45,9 +50,10 @@
                 display: block;
                 padding: 22px;
                 border: 1px solid #293142;
-                border-radius: 12px;
-                background: #181e29;
+                border-radius: 14px;
+                background: #002356;
                 color: #ffffff;
+                text-align: center;
                 text-decoration: none;
                 transition:
                     transform 150ms ease,
@@ -55,26 +61,29 @@
             }
 
             .screen:hover {
-                transform: translateY(-3px);
-                border-color: #4b7cff;
+                transform: translateY(-10px);
+                border-color: #dae505;
+                border-width: 5px;
+                
             }
 
             .screen strong {
                 display: block;
                 margin-bottom: 8px;
-                font-size: 20px;
+                color: #efefef;
+                font-size: 25px;
             }
 
             .screen span {
-                color: #aeb7c6;
-                font-size: 14px;
+                color: #efefef;
+                font-size: 16px;
             }
         </style>
     </head>
 
     <body>
         <main>
-            <h1>Pantallas Quividi</h1>
+            <h1>Pantallas Quividi iCo Medios</h1>
 
             <p>Selecciona una pantalla para abrir su contenido.</p>
 
@@ -138,6 +147,7 @@
                     <strong>Valla-960</strong>
                     <span>960 × 720</span>
                 </a>
+                
             </div>
         </main>
     </body>
