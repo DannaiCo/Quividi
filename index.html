@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>Pantallas Quividi</title>
+
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                padding: 40px;
+                min-height: 100vh;
+                background: #10131a;
+                color: #ffffff;
+                font-family: Arial, sans-serif;
+            }
+
+            main {
+                width: min(100%, 900px);
+                margin: 0 auto;
+            }
+
+            h1 {
+                margin: 0 0 10px;
+            }
+
+            p {
+                margin: 0 0 32px;
+                color: #aeb7c6;
+            }
+
+            .screens {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+                gap: 16px;
+            }
+
+            .screen {
+                display: block;
+                padding: 22px;
+                border: 1px solid #293142;
+                border-radius: 12px;
+                background: #181e29;
+                color: #ffffff;
+                text-decoration: none;
+                transition:
+                    transform 150ms ease,
+                    border-color 150ms ease;
+            }
+
+            .screen:hover {
+                transform: translateY(-3px);
+                border-color: #4b7cff;
+            }
+
+            .screen strong {
+                display: block;
+                margin-bottom: 8px;
+                font-size: 20px;
+            }
+
+            .screen span {
+                color: #aeb7c6;
+                font-size: 14px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <main>
+            <h1>Pantallas Quividi</h1>
+
+            <p>Selecciona una pantalla para abrir su contenido.</p>
+
+            <div class="screens">
+                <a class="screen" href="./c93/">
+                    <strong>C93</strong>
+                    <span>3840 × 542</span>
+                </a>
+
+                <a class="screen" href="./nb/">
+                    <strong>NB</strong>
+                    <span>3840 × 2160</span>
+                </a>
+
+                <a class="screen" href="./portobello/">
+                    <strong>Portobello</strong>
+                    <span>2120 × 576</span>
+                </a>
+
+                <a class="screen" href="./sfc/">
+                    <strong>SFC</strong>
+                    <span>2560 × 1440</span>
+                </a>
+
+                <a class="screen" href="./tm-641/">
+                    <strong>TM-641</strong>
+                    <span>641 × 192</span>
+                </a>
+
+                <a class="screen" href="./tm-769/">
+                    <strong>TM-769</strong>
+                    <span>769 × 192</span>
+                </a>
+
+                <a class="screen" href="./tm-897/">
+                    <strong>TM-897</strong>
+                    <span>897 × 192</span>
+                </a>
+
+                <a class="screen" href="./valla-1440/">
+                    <strong>Valla-1440</strong>
+                    <span>1440 × 480</span>
+                </a>
+
+                <a class="screen" href="./valla-960/">
+                    <strong>Valla-960</strong>
+                    <span>960 × 720</span>
+                </a>
+            </div>
+        </main>
+    </body>
+</html>
