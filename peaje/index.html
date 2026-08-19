@@ -95,6 +95,23 @@
     </div>
 
     <script>
+      /* ========================
+ESCALADO PANTALLA
+======================== */
+      function escalarStage() {
+        const stage = document.querySelector(".stage");
+
+        const scaleX = window.innerWidth / 4147;
+        const scaleY = window.innerHeight / 1556;
+
+        const scale = Math.min(scaleX, scaleY);
+
+        stage.style.transform = `scale(${scale})`;
+      }
+
+      window.addEventListener("resize", escalarStage);
+      window.addEventListener("load", escalarStage);
+
       const API_URL =
         "https://script.google.com/macros/s/AKfycbwit61z9FuDCP5pg-U9v3Xpa5xl9RSXjbjWFofnY3kmmaR6RKCjqjo2-l5WW0wt5ZYfHQ/exec";
 
@@ -253,7 +270,7 @@
       loadData();
 
       // Consulta nuevos datos cada 5 minutos
-      setInterval(loadData, 180 * 60 * 1000);
+      setInterval(loadData, 5 * 60 * 1000);
 
       // Repite la animación del número cada 12 segundos
       setInterval(() => {
