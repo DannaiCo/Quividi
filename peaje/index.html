@@ -2,25 +2,44 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=4146, height=1556, initial-scale=1.0" />
+
     <title>Audiencia Quividi</title>
 
     <!-- Open Sans ExtraBold -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
     <link
       href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,800;1,800&display=swap"
-      rel="stylesheet" />
+      rel="stylesheet"
+    />
 
     <style>
+      /*
+      ========================
+      STAGE PRINCIPAL
+      ========================
+      Misma lógica del código que ya funciona.
+      */
+
       .stage {
         position: relative;
+
         width: 4147px;
         height: 1556px;
+
         transform-origin: top left;
       }
 
+      /*
+      ========================
+      RESET
+      ========================
+      */
+
       * {
+        margin: 0;
+        padding: 0;
         box-sizing: border-box;
       }
 
@@ -28,34 +47,54 @@
       body {
         width: 100%;
         height: 100%;
+
         overflow: hidden;
+
         background: #1237f5;
       }
 
-      /* Video de fondo */
+      body {
+        user-select: none;
+        -webkit-user-select: none;
+      }
+
+      /*
+      ========================
+      VIDEO DE FONDO
+      ========================
+      */
+
       #background-video {
-        inset: 0;
         position: absolute;
+
         top: 0;
         left: 0;
+
         width: 4147px;
         height: 1556px;
+
         object-fit: cover;
+
         z-index: 0;
       }
 
       /*
-      Caja del número.
-      El video ya contiene la línea amarilla y el texto "Personas".
-      Solo colocamos el número encima.
-    */
+      ========================
+      CAJA DEL NÚMERO
+      ========================
+      */
+
       #number {
         position: absolute;
+
         left: 526px;
         top: 884px;
+
         width: 870px;
         height: 266px;
+
         z-index: 1;
+
         overflow: hidden;
 
         display: flex;
@@ -63,221 +102,656 @@
         justify-content: center;
 
         color: #ffffff;
+
         font-family: "Open Sans", sans-serif;
+
         font-size: 500px;
         font-weight: 800;
+
         line-height: 1;
+
         letter-spacing: -5px;
+
         white-space: nowrap;
       }
 
       #number span {
         display: block;
-        flex: 0 0 auto;
-        white-space: nowrap;
-      }
 
-      /* Evita que se vea un cursor o selección en pantalla */
-      body {
-        user-select: none;
-        -webkit-user-select: none;
+        flex: 0 0 auto;
+
+        white-space: nowrap;
+
+        line-height: 1;
       }
     </style>
   </head>
 
   <body>
-    <div id="screen">
-      <video id="background-video" autoplay muted loop playsinline preload="auto">
+
+    <!--
+    IMPORTANTE:
+    Ahora sí existe .stage.
+    Es exactamente el contenedor que escala.
+    -->
+
+    <div class="stage">
+
+      <video
+        id="background-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+      >
         <source src="fondo.mp4" type="video/mp4" />
       </video>
 
-      <div id="number"><span id="value">—</span></div>
+      <div id="number">
+        <span id="value">—</span>
+      </div>
+
     </div>
 
+
     <script>
-      /* ========================
-ESCALADO PANTALLA
-======================== */
+
+      /*
+      ========================================
+      ESCALADO DE PANTALLA
+      ========================================
+
+      MISMA LÓGICA DEL CÓDIGO QUE YA FUNCIONA.
+      */
+
       function escalarStage() {
-        const stage = document.querySelector(".stage");
 
-        const scaleX = window.innerWidth / 4147;
-        const scaleY = window.innerHeight / 1556;
+        const stage =
+          document.querySelector(".stage");
 
-        const scale = Math.min(scaleX, scaleY);
+        const scaleX =
+          window.innerWidth / 4147;
 
-        stage.style.transform = `scale(${scale})`;
+        const scaleY =
+          window.innerHeight / 1556;
+
+        const scale =
+          Math.min(scaleX, scaleY);
+
+        stage.style.transform =
+          `scale(${scale})`;
       }
 
-      window.addEventListener("resize", escalarStage);
-      window.addEventListener("load", escalarStage);
+
+      /*
+      Ejecutar cuando cambia el tamaño
+      de la ventana.
+      */
+
+      window.addEventListener(
+        "resize",
+        escalarStage
+      );
+
+
+      /*
+      Ejecutar cuando termina de cargar
+      completamente la página.
+      */
+
+      window.addEventListener(
+        "load",
+        escalarStage
+      );
+
+
+      /*
+      ========================================
+      API QUIVIDI
+      ========================================
+      */
 
       const API_URL =
         "https://script.google.com/macros/s/AKfycbwit61z9FuDCP5pg-U9v3Xpa5xl9RSXjbjWFofnY3kmmaR6RKCjqjo2-l5WW0wt5ZYfHQ/exec";
 
-      // Lee el ID desde la URL:
-      // https://tu-github.github.io/tu-repo/?id=141983
-      const params = new URLSearchParams(window.location.search);
 
-      // ID para pruebas
-      const TEST_ID = "142691";
+      /*
+      Lee el ID desde la URL.
 
-      // Si viene ?id= en la URL usa ese.
-      // Si no viene, usa TEST_ID.
-      const screenId = params.get("id") || TEST_ID;
+      Ejemplo:
 
-      const numberElement = document.getElementById("number");
-      const valueElement = document.getElementById("value");
+      ?id=141983
+      */
 
-      // Rango normal de trabajo. Si el contenido todavía no cabe a 24 px,
-      // la función sigue reduciendo la fuente como medida de seguridad.
+      const params =
+        new URLSearchParams(
+          window.location.search
+        );
+
+
+      /*
+      ID para pruebas.
+      */
+
+      const TEST_ID =
+        "145995";
+
+
+      /*
+      Si existe ?id= en la URL,
+      utiliza ese valor.
+
+      Si no existe,
+      utiliza TEST_ID.
+      */
+
+      const screenId =
+        params.get("id") || TEST_ID;
+
+
+      /*
+      ========================================
+      ELEMENTOS
+      ========================================
+      */
+
+      const numberElement =
+        document.getElementById("number");
+
+      const valueElement =
+        document.getElementById("value");
+
+
+      /*
+      ========================================
+      TAMAÑOS DE FUENTE
+      ========================================
+      */
+
       const MIN_FONT_SIZE = 100;
+
       const MAX_FONT_SIZE = 500;
+
+
+      /*
+      Valor actualmente mostrado.
+      */
 
       let currentValue = null;
 
+
+      /*
+      ========================================
+      FORMATO DEL NÚMERO
+      ========================================
+      */
+
       function formatNumber(value) {
-        return Number(value).toLocaleString("es-CO");
+
+        return Number(value).toLocaleString(
+          "es-CO"
+        );
       }
 
+
+      /*
+      ========================================
+      COMPROBAR SI EL NÚMERO CABE
+      ========================================
+
+      IMPORTANTE:
+
+      No usamos getBoundingClientRect()
+      porque .stage está usando:
+
+      transform: scale(...)
+
+      getBoundingClientRect() devuelve
+      las medidas ya transformadas.
+
+      scrollWidth y scrollHeight permiten
+      trabajar correctamente con las
+      dimensiones originales 4147x1556.
+      */
+
+      function numberFits() {
+
+        const availableWidth =
+          numberElement.clientWidth;
+
+        const availableHeight =
+          numberElement.clientHeight;
+
+        const contentWidth =
+          valueElement.scrollWidth;
+
+        const contentHeight =
+          valueElement.scrollHeight;
+
+        return (
+          contentWidth <= availableWidth &&
+          contentHeight <= availableHeight
+        );
+      }
+
+
+      /*
+      ========================================
+      AJUSTAR TAMAÑO DEL NÚMERO
+      ========================================
+      */
+
       function fitNumber() {
-        const availableWidth = numberElement.clientWidth;
-        const availableHeight = numberElement.clientHeight;
 
-        let low = MIN_FONT_SIZE;
-        let high = MAX_FONT_SIZE;
-        let bestSize = MIN_FONT_SIZE;
+        let low =
+          MIN_FONT_SIZE;
 
-        // Busca el mayor tamaño de fuente que cabe tanto en ancho como en alto.
+        let high =
+          MAX_FONT_SIZE;
+
+        let bestSize =
+          MIN_FONT_SIZE;
+
+
+        /*
+        Búsqueda del tamaño máximo
+        que cabe dentro de la caja.
+        */
+
         while (low <= high) {
-          const testSize = Math.floor((low + high) / 2);
-          valueElement.style.fontSize = testSize + "px";
 
-          const rect = valueElement.getBoundingClientRect();
-          const fits = rect.width <= availableWidth && rect.height <= availableHeight;
+          const testSize =
+            Math.floor(
+              (low + high) / 2
+            );
 
-          if (fits) {
-            bestSize = testSize;
-            low = testSize + 1;
+
+          valueElement.style.fontSize =
+            testSize + "px";
+
+
+          if (numberFits()) {
+
+            bestSize =
+              testSize;
+
+            low =
+              testSize + 1;
+
           } else {
-            high = testSize - 1;
+
+            high =
+              testSize - 1;
           }
         }
 
-        valueElement.style.fontSize = bestSize + "px";
 
-        // Garantía adicional: si ni siquiera el mínimo configurado cabe,
-        // continúa reduciendo hasta que el contenido quede dentro de la caja.
-        let safeSize = bestSize;
-        let rect = valueElement.getBoundingClientRect();
+        /*
+        Aplicar el mejor tamaño encontrado.
+        */
 
-        while ((rect.width > availableWidth || rect.height > availableHeight) && safeSize > 1) {
+        valueElement.style.fontSize =
+          bestSize + "px";
+
+
+        /*
+        Seguridad adicional.
+
+        Si por alguna razón todavía
+        no cabe, continúa reduciendo.
+        */
+
+        let safeSize =
+          bestSize;
+
+
+        while (
+          !numberFits() &&
+          safeSize > 1
+        ) {
+
           safeSize -= 1;
-          valueElement.style.fontSize = safeSize + "px";
-          rect = valueElement.getBoundingClientRect();
+
+          valueElement.style.fontSize =
+            safeSize + "px";
         }
       }
 
+
+      /*
+      ========================================
+      MOSTRAR VALOR
+      ========================================
+      */
+
       function setDisplayedValue(value) {
-        valueElement.textContent = value;
+
+        valueElement.textContent =
+          value;
+
         fitNumber();
       }
 
-      function animateNumber(from, to, duration = 2200) {
-        const startTime = performance.now();
+
+      /*
+      ========================================
+      ANIMACIÓN DEL NÚMERO
+      ========================================
+      */
+
+      function animateNumber(
+        from,
+        to,
+        duration = 2200
+      ) {
+
+        const startTime =
+          performance.now();
+
 
         function frame(now) {
-          const progress = Math.min((now - startTime) / duration, 1);
 
-          // Ease-out: empieza rápido y termina suave.
-          const eased = 1 - Math.pow(1 - progress, 4);
+          const progress =
+            Math.min(
+              (now - startTime) / duration,
+              1
+            );
 
-          const value = Math.round(from + (to - from) * eased);
 
-          setDisplayedValue(formatNumber(value));
+          /*
+          Ease-out.
+
+          Empieza rápido y
+          termina suavemente.
+          */
+
+          const eased =
+            1 -
+            Math.pow(
+              1 - progress,
+              4
+            );
+
+
+          const value =
+            Math.round(
+              from +
+              (to - from) * eased
+            );
+
+
+          setDisplayedValue(
+            formatNumber(value)
+          );
+
 
           if (progress < 1) {
-            requestAnimationFrame(frame);
+
+            requestAnimationFrame(
+              frame
+            );
+
           } else {
-            setDisplayedValue(formatNumber(to));
+
+            setDisplayedValue(
+              formatNumber(to)
+            );
           }
         }
 
-        requestAnimationFrame(frame);
+
+        requestAnimationFrame(
+          frame
+        );
       }
 
+
+      /*
+      ========================================
+      CONSULTA DE DATOS
+      ========================================
+      */
+
       async function loadData() {
+
         if (!screenId) {
+
           setDisplayedValue("—");
-          console.error("Falta el parámetro ?id=");
+
+          console.error(
+            "Falta el parámetro ?id="
+          );
+
           return;
         }
 
+
         try {
-          const response = await fetch(API_URL + "?id=" + encodeURIComponent(screenId) + "&t=" + Date.now(), {
-            method: "GET",
-            cache: "no-store"
-          });
+
+          const response =
+            await fetch(
+
+              API_URL +
+
+              "?id=" +
+              encodeURIComponent(
+                screenId
+              ) +
+
+              "&t=" +
+              Date.now(),
+
+              {
+                method: "GET",
+                cache: "no-store"
+              }
+            );
+
 
           if (!response.ok) {
-            throw new Error("HTTP " + response.status);
+
+            throw new Error(
+              "HTTP " +
+              response.status
+            );
           }
 
-          const data = await response.json();
 
-          if (data.error || data.data === "" || data.data === null || data.data === undefined) {
-            throw new Error("El endpoint no devolvió un dato válido.");
+          const data =
+            await response.json();
+
+
+          /*
+          Validación del dato recibido.
+          */
+
+          if (
+            data.error ||
+            data.data === "" ||
+            data.data === null ||
+            data.data === undefined
+          ) {
+
+            throw new Error(
+              "El endpoint no devolvió un dato válido."
+            );
           }
 
-          const newValue = Number(data.data);
 
-          if (!Number.isFinite(newValue)) {
-            throw new Error("El dato recibido no es numérico.");
+          const newValue =
+            Number(data.data);
+
+
+          if (
+            !Number.isFinite(newValue)
+          ) {
+
+            throw new Error(
+              "El dato recibido no es numérico."
+            );
           }
 
-          if (currentValue === null) {
-            // Primera carga: cuenta desde 0.
+
+          /*
+          Primera carga.
+
+          Comienza la animación desde cero.
+          */
+
+          if (
+            currentValue === null
+          ) {
+
             currentValue = 0;
           }
 
-          if (newValue !== currentValue) {
-            animateNumber(currentValue, newValue);
-            currentValue = newValue;
-          } else {
-            setDisplayedValue(formatNumber(newValue));
-          }
-        } catch (error) {
-          console.error("Error cargando Quividi:", error);
 
-          // Si ya tenemos un dato válido, lo conservamos.
-          // Nunca reemplazamos el dato por cero por un error de conexión.
-          if (currentValue !== null) {
-            setDisplayedValue(formatNumber(currentValue));
+          /*
+          Si el número cambió,
+          ejecutamos la animación.
+          */
+
+          if (
+            newValue !== currentValue
+          ) {
+
+            const previousValue =
+              currentValue;
+
+            currentValue =
+              newValue;
+
+
+            animateNumber(
+              previousValue,
+              newValue
+            );
+
           } else {
+
+            setDisplayedValue(
+              formatNumber(newValue)
+            );
+          }
+
+
+        } catch (error) {
+
+          console.error(
+            "Error cargando Quividi:",
+            error
+          );
+
+
+          /*
+          Si ya tenemos un dato válido,
+          mantenemos ese dato.
+          */
+
+          if (
+            currentValue !== null
+          ) {
+
+            setDisplayedValue(
+              formatNumber(
+                currentValue
+              )
+            );
+
+          } else {
+
             setDisplayedValue("—");
           }
         }
       }
 
-      // Recalcula el tamaño cuando la fuente web haya terminado de cargar.
-      if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(fitNumber);
+
+      /*
+      ========================================
+      CARGA DE FUENTE
+      ========================================
+      */
+
+      if (
+        document.fonts &&
+        document.fonts.ready
+      ) {
+
+        document.fonts.ready.then(
+          function() {
+
+            fitNumber();
+          }
+        );
       }
 
-      window.addEventListener("resize", fitNumber);
 
-      // Primera consulta
+      /*
+      ========================================
+      RESIZE
+      ========================================
+
+      Escala la pantalla y vuelve a
+      comprobar el tamaño del número.
+      */
+
+      window.addEventListener(
+        "resize",
+        function() {
+
+          escalarStage();
+
+          fitNumber();
+        }
+      );
+
+
+      /*
+      ========================================
+      PRIMERA CONSULTA
+      ========================================
+      */
+
       loadData();
 
-      // Consulta nuevos datos cada 5 minutos
-      setInterval(loadData, 5 * 60 * 1000);
 
-      // Repite la animación del número cada 12 segundos
-      setInterval(() => {
-        if (currentValue !== null) {
-          animateNumber(0, currentValue);
-        }
-      }, 12 * 1000);
+      /*
+      ========================================
+      CONSULTA CADA 5 MINUTOS
+      ========================================
+      */
+
+      setInterval(
+        loadData,
+        5 * 60 * 1000
+      );
+
+
+      /*
+      ========================================
+      REPETIR ANIMACIÓN CADA 12 SEGUNDOS
+      ========================================
+      */
+
+      setInterval(
+        function() {
+
+          if (
+            currentValue !== null
+          ) {
+
+            animateNumber(
+              0,
+              currentValue
+            );
+          }
+        },
+
+        12 * 1000
+      );
+
     </script>
+
   </body>
 </html>
